@@ -1,5 +1,7 @@
 
 
+/// <reference types="vite/client" />
+
 declare module '*.svg' {
   const content: any;
   export default content;
@@ -38,6 +40,16 @@ declare module '*.ico' {
 declare module '*.bmp' {
   const content: string;
   export default content;
+}
+
+interface ImportMetaEnv {
+  readonly VITE_POLL_KEY: string;
+  readonly VITE_BIGMODEL_API_KEY: string;
+  readonly VITE_GEMINI_API_KEY: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
 }
 
 /**
