@@ -1,0 +1,26 @@
+{
+  "name": "The Oracle of Chance",
+  "short_name": "Oracle",
+  "description": "An Oracle of Chance - search done right. A Suprematist-inspired decision engine.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://api.dicebear.com/9.x/shapes/png?seed=Oracle&size=192&backgroundColor=000000",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://api.dicebear.com/9.x/shapes/png?seed=Oracle&size=512&backgroundColor=000000",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

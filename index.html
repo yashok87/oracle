@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>The Oracle of Chance</title>
+    <meta name="description" content="An Oracle of Chance - search done right" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAegnu9YAAAAASUVORK5CYII=" />
+    <link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAegnu9YAAAAASUVORK5CYII=" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="https://api.dicebear.com/9.x/shapes/png?seed=Oracle&size=192&backgroundColor=000000" />
+    
+    <link rel="preconnect" href="https://image.pollinations.ai" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #ffffff;
+        color: #000000;
+        overflow-x: hidden;
+        transition: background-color 0.5s ease;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .bg-grain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.03;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        z-index: 50;
+      }
+
+      /* Oracle Custom Animations */
+      @keyframes oracle-spin-pulse {
+        0% { transform: rotate(0deg); opacity: 0.3; box-shadow: 0 0 10px rgba(220, 38, 38, 0.2); }
+        50% { transform: rotate(180deg); opacity: 0.8; box-shadow: 0 0 30px rgba(220, 38, 38, 0.6); }
+        100% { transform: rotate(360deg); opacity: 0.3; box-shadow: 0 0 10px rgba(220, 38, 38, 0.2); }
+      }
+      .animate-oracle-spin-pulse {
+        animation: oracle-spin-pulse 3s linear infinite;
+      }
+
+      @keyframes oracle-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
+        50% { box-shadow: 0 0 60px rgba(220, 38, 38, 0.15); }
+      }
+      .oracle-glow {
+        animation: oracle-glow 10s ease-in-out infinite;
+      }
+
+      .renoir-glow {
+        animation: renoir-glow 12s ease-in-out infinite;
+      }
+      @keyframes renoir-glow {
+        0%, 100% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.1); }
+        50% { box-shadow: 0 0 80px rgba(245, 158, 11, 0.25); }
+      }
+
+      /* Broken Light Flicker Animation - Softened for better UX */
+      @keyframes broken-light {
+        0%, 35%, 45%, 85%, 100% { opacity: 0.4; } /* Lighter steady state */
+        36%, 38%, 41%, 43% { opacity: 0.15; }     /* Softer flicker lows */
+        37%, 39%, 42%, 44% { opacity: 0.3; }
+        40% { opacity: 0.05; }
+        86%, 88%, 91% { opacity: 0.2; }
+        87%, 89%, 92% { opacity: 0.35; }
+        90% { opacity: 0.1; }
+      }
+      .animate-broken-light {
+        animation: broken-light 8s infinite ease-in-out;
+      }
+
+      /* Fix for iOS PWA safe areas */
+      @supports (padding: env(safe-area-inset-top)) {
+        body {
+          padding-top: env(safe-area-inset-top);
+          padding-bottom: env(safe-area-inset-bottom);
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+    "html2canvas": "https://esm.sh/html2canvas@^1.4.1",
+    "vite": "https://esm.sh/vite@^7.2.7",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <div class="bg-grain"></div>
+    <script type="module" src="./index.tsx"></script>
+  </body>
+</html>
